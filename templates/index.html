@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>השאלון המגניב שלי</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f0f8ff; text-align: center; padding: 50px; }
+        .quiz-box { background: white; border: 2px solid #4a90e2; padding: 30px; border-radius: 20px; display: inline-block; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); }
+        h1 { color: #4a90e2; }
+        .question { font-size: 20px; margin: 20px 0; font-weight: bold; }
+        .option { display: block; margin: 10px; background: #eef; padding: 10px; border-radius: 10px; cursor: pointer; }
+        .option:hover { background: #d0e0ff; }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-box">
+        <h1 id="title">טוען שאלון...</h1>
+        <div id="quiz-container"></div>
+    </div>
+
+    <script>
+        fetch('/get_quiz/1')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('title').innerText = data.title;
+                let container = document.getElementById('quiz-container');
+                
+                data.questions.forEach(q => {
+                    let qDiv = document.createElement('div');
+                    qDiv.className = 'question';
+                    qDiv.innerText = q.text;
+                    container.appendChild(qDiv);
+                    
+                    q.options.forEach(opt => {
+                        let btn = document.createElement('div');
+                        btn.className = 'option';
+                        btn.innerText = opt;
+                        btn.onclick = () => alert("בחרת: " + opt);
+                        container.appendChild(btn);
+                    });
+                });
+            });
+    </script>
+
+</body>
+</html>
