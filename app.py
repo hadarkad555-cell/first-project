@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>השאלון המעוצב שלי</title>
     <style>
-    
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f2f5;
@@ -60,20 +59,18 @@
 
     <script>
         
-        // אנחנו מבקשים מהשרת את שאלון מספר 1
         fetch('/get_quiz/1')
             .then(response => response.json())
             .then(data => {
-                // ברגע שהנתונים הגיעו מהפייתון:
                 document.getElementById('quiz-title').innerText = data.title;
                 const container = document.getElementById('quiz-container');
-                container.innerHTML = ''; // מנקים את הודעת הטעינה
+                container.innerHTML = '';
 
-                // עוברים שאלה שאלה ומציגים אותה
+            
                 data.questions.forEach((q, index) => {
                     const qElement = document.createElement('div');
                     qElement.innerHTML = `<p class="question-text">${q.text}</p>`;
-            
+                    
                     q.options.forEach(opt => {
                         const btn = document.createElement('button');
                         btn.className = 'option-button';
